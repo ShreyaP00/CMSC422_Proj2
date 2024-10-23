@@ -179,8 +179,14 @@ class MCTree:
             print ('training classifier for', leftLabels, 'versus', rightLabels)
 
             # compute the training data, store in thisX, thisY
-            ### TODO: YOUR CODE HERE
-            util.raiseNotDefined()
+           
+           
+            ### TODO: DONE!!!
+            
+            thisX = X[np.isin(Y, leftLabels) | np.isin(Y, rightLabels)]
+            thisY = np.where(np.isin(Y[np.isin(Y, leftLabels) | np.isin(Y, rightLabels)], leftLabels), -1, 1)
+
+            #util.raiseNotDefined()
 
             try:
                 n.getNodeInfo().fit(thisX, thisY) # For sklearn implementations
@@ -189,7 +195,20 @@ class MCTree:
 
     def predict(self, X):
         ### TODO: YOUR CODE HERE
-        util.raiseNotDefined()
+
+        threshold = 0.5
+        currNode = self.tree
+        while not currNode.isLeaf:
+             classifier = currNode.getNodeInfo()
+             probs = classifier.predict_proba(X.reshape(1, -1))
+
+             if probs[0, 1] < threshold:
+                 currNode = currNode.getLeft()
+             else:
+                 currNode = currNode.getRight()
+
+        return currNode.getLabel()
+        #util.raiseNotDefined()
 
     def predictAll(self, X):
         N,D = X.shape
