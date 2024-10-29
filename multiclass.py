@@ -199,13 +199,13 @@ class MCTree:
         threshold = 0.5
         currNode = self.tree
         while not currNode.isLeaf:
-             classifier = currNode.getNodeInfo()
-             probs = classifier.predict_proba(X.reshape(1, -1))
+            classifier = currNode.getNodeInfo()
+            probs = classifier.predict_proba(X.reshape(1, -1))
 
-             if probs[0, 1] < threshold:
-                 currNode = currNode.getLeft()
-             else:
-                 currNode = currNode.getRight()
+            if probs[0, 1] < threshold:
+                     currNode = currNode.getLeft()
+            else:
+                currNode = currNode.getRight()
 
         return currNode.getLabel()
         #util.raiseNotDefined()

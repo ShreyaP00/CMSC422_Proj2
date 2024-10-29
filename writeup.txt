@@ -1,0 +1,28 @@
+Write UP
+---------------------------------------------------
+
+WU1:
+
+A) After training the OAA on tree with depth 3, the words most 
+indicative of being Sauvignon-Blanc are Citrus, Grapefruit, 
+Stone, flavor, and variety.  
+
+#Large datasets
+OAA acc: 29.50%
+AVA acc: 21.33%
+
+#zeroOne
+OAA acc: 19.11%
+AVA acc: 24.95%
+
+#depth 3
+OAA predAll mean: 59.96%,  pred 1: 40.70%
+AVA predAll mean: 55.80%,  pred 1: 40.70%
+
+OAA: 
+S_B: +Citrus -> +grapefruit -> +Stone, +Citrus -> +grapefruit -> +Flavor,
+     -Citrus -> +Lime -> +Variety, -Citrus -> +Lime -> -GooseBerry 
+
+Sauvignon-Blanc [0]: GrapeFruit
+Cabernet-Sauvignon [1]:
+Pinot-Noir [2]:

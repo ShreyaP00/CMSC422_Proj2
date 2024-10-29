@@ -64,7 +64,12 @@ class LogisticLoss(LossFunction):
         """
 
         ### TODO: YOUR CODE HERE
-        util.raiseNotDefined()
+        tot_loss = 0
+        for i in range(len(Y)):
+            tot_loss += log(1 + exp(-Y[i] * Yhat[i]))
+        return tot_loss
+        
+        #util.raiseNotDefined()
 
 
     def lossGradient(self, X, Y, Yhat):
@@ -75,8 +80,11 @@ class LogisticLoss(LossFunction):
         """
 
         ### TODO: YOUR CODE HERE
-        util.raiseNotDefined()
 
+        pred = 1 / (1 + exp(-Yhat))
+
+        return - sum((Y - pred) * X.T, axis=1)
+        #util.raiseNotDefined()
 
 class HingeLoss(LossFunction):
     """
@@ -90,7 +98,12 @@ class HingeLoss(LossFunction):
         """
 
         ### TODO: YOUR CODE HERE
-        util.raiseNotDefined()
+        sum = 0
+        for i in range(len(Y)):
+            sum += max(0, 1 - Y[i] * Yhat[i])
+        return sum
+        
+        #util.raiseNotDefined()
 
     def lossGradient(self, X, Y, Yhat):
         """
@@ -100,7 +113,14 @@ class HingeLoss(LossFunction):
         """
 
         ### TODO: YOUR CODE HERE
-        util.raiseNotDefined()
+        grad = zeros(X.shape[1])
+
+        for i in range(len(Y)):
+            if 1 - Y[i] * Yhat[i] > 0:
+                grad -= Y[i] *X[i]
+        return grad
+        
+        #util.raiseNotDefined()
 
 
 class LinearClassifier(BinaryClassifier):
@@ -176,9 +196,9 @@ class LinearClassifier(BinaryClassifier):
         def func(w):
             # should compute obj = loss(w) + (lambd/2) * norm(w)^2
             self.weights = w
-            Yhat = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
+            Yhat = dot(X, self.weights)     ### TODO: YOUR CODE HERE
 
-            obj  = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
+            obj  = lossFn.loss(Y, Yhat) + (lambd / 2) * norm(w) **2     ### TODO: YOUR CODE HERE
 
             # return the objective
             return obj
@@ -187,9 +207,9 @@ class LinearClassifier(BinaryClassifier):
         def grad(w):
             # should compute gr = grad(w) + lambd * w
             self.weights = w
-            Yhat = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
+            Yhat = dot(X, self.weights)    ### TODO: YOUR CODE HERE
 
-            gr   = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
+            gr   = lossFn.lossGradient(X, Y, Yhat) + lambd * w    ### TODO: YOUR CODE HERE
 
             return gr
 
